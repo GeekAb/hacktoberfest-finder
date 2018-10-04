@@ -21,15 +21,16 @@ const app = new Vue({
     methods: {
 
         loadIssues: function() {
-
+            
             axios({
                 method: "get",
-                url: "https://api.github.com/search/issues?q=label:hacktoberfest+type:issue+state:open"
+                url: "https://api.github.com/search/issues?q=label:hacktoberfest+type:issue+state:open&page="+this.page
             }).then(response => {
                 this.results = [
                     ...this.results,
                     ...response.data.items
                 ];
+		        this.page = this.page+1;
                 this.showViewMore = true;
             }).catch(error => {
                 this.showViewMore = false;
